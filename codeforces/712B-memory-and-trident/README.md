@@ -1,0 +1,1 @@
+# Codeforces 712B: Memory and Trident
