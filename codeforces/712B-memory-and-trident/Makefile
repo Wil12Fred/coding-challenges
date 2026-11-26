@@ -1,18 +1,24 @@
 CXX      ?= g++
 CXXFLAGS ?= -std=c++11 -O2 -Wall
 
-all: 712b
+PROG := 712b
+BIN  := bin/$(PROG)
 
-712b: 712b.cc
+all: $(BIN)
+
+$(BIN): $(PROG).cc
+	@mkdir -p bin
 	$(CXX) $(CXXFLAGS) -o $@ $<
 
-test: 712b
-	@test "$$(echo RRU  | ./712b)" = "-1"
-	@test "$$(echo UDUR | ./712b)" = "1"
-	@test "$$(echo RUUR | ./712b)" = "2"
-	@echo "all samples pass"
+# Golden tests: each tests/N.in is fed to the program on stdin and the output
+# must match tests/N.out exactly.
+test: $(BIN)
+	@set -e; n=0; for f in tests/*.in; do \
+	  if ./$(BIN) < $$f | diff -u $${f%.in}.out - ; then n=$$((n+1)); \
+	  else echo "FAIL: $$f"; exit 1; fi; \
+	done; echo "$$n samples pass"
 
 clean:
-	rm -f 712b
+	rm -rf bin
 
 .PHONY: all test clean

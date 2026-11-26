@@ -1,0 +1,8 @@
+# Build output: every problem builds into its own bin/
+bin/
+*.o
+*.exe
+a.out
+.DS_Store
+.idea/
+.vscode/
