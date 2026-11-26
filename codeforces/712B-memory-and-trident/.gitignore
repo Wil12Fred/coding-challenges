@@ -1,0 +1,6 @@
+712b
+*.o
+*.exe
+.DS_Store
+.idea/
+.vscode/
